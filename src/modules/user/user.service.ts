@@ -9,7 +9,7 @@ import { GetAllUsersInput } from './dtos/inputs/getAllUsers.input';
 export class UserService implements IUserService {
   constructor(private prisma: PrismaService) {}
 
-  async getById(id: number): Promise<User | null> {
+  async getUserById(id: number): Promise<User | null> {
     if (id <= 0) {
       throw new BadRequestException('ID is required');
     }
@@ -19,7 +19,7 @@ export class UserService implements IUserService {
     });
   }
 
-  async getAll(input: GetAllUsersInput): Promise<User[]> {
+  async getAllUsers(input: GetAllUsersInput): Promise<User[]> {
     const { skip, take, cursor, where, orderBy } = input.params;
     return await this.prisma.user.findMany({
       skip,
