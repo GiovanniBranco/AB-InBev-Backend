@@ -18,7 +18,7 @@ import {
   IUserService,
   UserServiceToken,
 } from './interfaces/user-service.interface';
-import { CreateUserRequest } from './dtos/ports/create-user.request';
+import { CreateUserRequest as CreateUpdateUserRequest } from './dtos/ports/create-user.request';
 
 @Controller('users')
 export class UserController {
@@ -54,7 +54,7 @@ export class UserController {
   }
 
   @Post()
-  async createUser(@Body() request: CreateUserRequest): Promise<User> {
+  async createUser(@Body() request: CreateUpdateUserRequest): Promise<User> {
     const user = await this.userService.createUser({
       name: request.name,
       email: request.email,
@@ -69,7 +69,7 @@ export class UserController {
     type: Number,
   })
   async updateUser(
-    @Body() request: CreateUserRequest,
+    @Body() request: CreateUpdateUserRequest,
     @Param('id') id: string,
   ): Promise<User> {
     const user = await this.userService.updateUser({
