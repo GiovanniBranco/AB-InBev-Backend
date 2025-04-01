@@ -1,19 +1,24 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Inject,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ApiParam } from '@nestjs/swagger';
-import { GetAllUsersInput } from './dtos/inputs/getAllUsers.input';
-import { GetAllUsersRequest } from './dtos/ports/getAllUsers.request';
-import { User } from './entities/user';
-import { IUserService, UserServiceToken } from './interfaces/IUserService';
-import { CreateUserRequest } from './dtos/ports/createUser.request';
+import { GetAllUsersInput } from './dtos/inputs/get-all-users.input';
+import { GetAllUsersRequest } from './dtos/ports/get-all-users.request';
+import { User } from './entities/user.entity';
+import {
+  IUserService,
+  UserServiceToken,
+} from './interfaces/user-service.interface';
+import { CreateUserRequest } from './dtos/ports/create-user.request';
 
 @Controller('users')
 export class UserController {
@@ -50,12 +55,41 @@ export class UserController {
 
   @Post()
   async createUser(@Body() request: CreateUserRequest): Promise<User> {
-    console.log('cheguei no controller', request);
     const user = await this.userService.createUser({
       name: request.name,
       email: request.email,
     });
 
     return HttpStatus.CREATED, user;
+  }
+
+  @Put(':id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+  })
+  async updateUser(
+    @Body() request: CreateUserRequest,
+    @Param('id') id: string,
+  ): Promise<User> {
+    const user = await this.userService.updateUser({
+      where: { id: Number(id) },
+      data: {
+        name: request.name,
+        email: request.email,
+      },
+    });
+
+    return user;
+  }
+
+  @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: Number,
+  })
+  async deleteUser(@Param('id') id: string): Promise<User> {
+    const user = await this.userService.deleteUser(Number(id));
+    return user;
   }
 }

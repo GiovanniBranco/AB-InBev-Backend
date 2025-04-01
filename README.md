@@ -18,6 +18,13 @@ $ docker-compose up
 Criar arquivo .env com a variável: DATABASE_URL="postgresql://postgres:postgres@localhost:5433/user_db"
 
 
+Execute o comando para popular as tabelas:
+```bash
+$ yarn seed
+```
+
+
+
 ## Compile and run the project
 
 ```bash
