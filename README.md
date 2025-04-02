@@ -9,11 +9,8 @@ BFF em Nest para atender ao teste técnico da AB InBev
 ```bash
 $ yarn install
 
-$ cd src/config && docker-compose up
-
+$ cd docker; docker-compose up
 ```
-
-Criar arquivo .env com a variável: DATABASE_URL="postgresql://postgres:postgres@localhost:5433/user_db"
 
 Execute o comando para popular as tabelas:
 
